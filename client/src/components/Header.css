@@ -1,0 +1,127 @@
+.header-bar {
+  position: absolute;
+  top: -4px;
+  left: 24px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  align-self: flex-end;
+  margin-top: 10px;
+}
+
+.logo-img {
+  width: 70px;
+  height: 44px;
+  object-fit: cover;
+  padding: 4px;
+}
+
+.logo-text {
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  line-height: 1.5;
+}
+
+.nav-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 14px 36px;
+  background-color: var(--cream);
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+.nav-pill::before,
+.nav-pill::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 0% 0%, transparent 50px, var(--cream) 51px);
+  z-index: 1;
+}
+
+.nav-pill::before {
+  top: -33px;
+  left: -56px;
+  transform: rotate(-101deg);
+}
+
+.nav-pill::after {
+  top: -33px;
+  right: -56px;
+  transform: scaleX(-1) rotate(-101deg);
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-link-active {
+  background-color: #8E8B82;
+  color: #F6F6F6;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 9999px;
+}
+
+.cta-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  padding: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+.cta-text {
+  padding: 10px 20px;
+  color: white;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.cta-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: px;
+  height: 36px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.cta-arrow {
+  color: white;
+  font-size: 16px;
+}
+
+.cta-button:hover .cta-circle {
+  transform: translateX(6px);
+}

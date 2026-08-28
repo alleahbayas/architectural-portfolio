@@ -1,0 +1,116 @@
+.hero {
+  position: relative;
+  height: 95vh;
+  background-size: cover;
+  background-position: center;
+  border-radius: 32px;
+  margin: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: #343434;
+  opacity: 75%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  padding: 300px 64px 0;
+  color: white;
+}
+
+.hero-label {
+  font-family: var(--font-label);
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #FAF7F0;
+}
+
+.hero-label-line {
+  display: inline-block;
+  width: 45px;
+  height: 1px;
+  background-color: #FAF7F0;
+}
+
+.hero-title {
+  font-family: var(--font-body);
+  font-size: 100px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.8em;
+}
+
+.hero-title em {
+  font-family: var(--font-heading);
+  font-style: italic;
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-family: var(--font-body);
+}
+
+.hero-blurb {
+  position: absolute;
+  right: 64px;
+  bottom: 60px;
+  max-width: 300px;
+  color: white;
+  text-align: right;
+  font-family: var(--font-body);
+  font-weight: 100;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.hero-frame {
+  position: relative;
+  background-color: var(--cream);
+}
+
+.hero-frame::before,
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle at 100% 100%, transparent 32px, var(--cream) 33px);
+  z-index: 5;
+}
+
+.hero-frame::before {
+  left: 16px;
+}
+
+.hero-frame::after {
+  right: 16px;
+  transform: scaleX(-1);
+}
