@@ -1,16 +1,35 @@
 import "./Hero.css";
 import Header from "./Header";
+import Logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
 
 function Hero() {
   const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    if (id === "hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+    setActiveSection(id);
   };
 
   return (
     <section id="hero" className="hero" style={{ backgroundImage: `url(${heroImg})` }}>
       <div className="hero-overlay"></div>
       <Header />
+
+      <div className="hero-logo">
+        <img src={Logo} alt="logo" className="logo-img" />
+        <span className="logo-text">GILLIAN<br />GUTIERREZ</span>
+      </div>
+
+      <button onClick={() => scrollToSection("contact")} className="hero-cta-button">
+        <span className="cta-text">Let's Connect</span>
+        <span className="cta-circle">
+          <span className="cta-circle-arrow">-&gt;</span>
+        </span>
+      </button>
+
       <div className="hero-content">
         <p className="hero-label">
           <span className="hero-label-line"></span>

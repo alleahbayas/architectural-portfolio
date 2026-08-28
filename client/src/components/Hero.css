@@ -18,6 +18,76 @@
   opacity: 75%;
 }
 
+.hero-logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.logo-img {
+  width: 70px;
+  height: 44px;
+  object-fit: cover;
+  padding: 4px;
+}
+
+.logo-text {
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  line-height: 1.5;
+  color: white;
+}
+
+.hero-cta-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  padding: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+.cta-text {
+  padding: 10px 20px;
+  color: white;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.cta-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.cta-circle-arrow {
+  color: #343434;
+  font-size: 16px;
+}
+
+.hero-cta-button:hover .cta-circle {
+  transform: translateX(6px);
+}
+
 .hero-content {
   position: relative;
   z-index: 5;

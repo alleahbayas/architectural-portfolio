@@ -1,0 +1,125 @@
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 24px;
+}
+
+.about-img {
+    display: flex;
+    width: 90vh;
+    height: 90vh;
+    object-fit: cover;
+    margin-top: 10%;
+    padding: 40px;
+    align-items: center;
+}
+
+.about-label-line {
+  display: inline-block;
+  width: 45px;
+  height: 1px;
+  background-color: #8E8B82;
+}
+
+.about-label {
+    display: flex;
+    font-family: var(--font-label);
+    font-weight: 300;
+    font-size: 13px;
+    color: #8E8B82;
+    margin-top: 200px;
+    letter-spacing: 0.5em;
+    align-items: center;
+    gap: 12px;
+}
+
+.about-title {
+    display: flex;
+    font-family: var(--family-body);
+    font-size: 100px;
+    font-weight: 500;
+    color: #343434;
+    letter-spacing: -0.06em;
+    line-height: 0.8em;
+    padding-top: 0.5em;
+}
+
+.about-description {
+    display: flex;
+    font-family: var(--family-body);
+    font-size: 18px;
+    font-weight: 300;
+    color: #8E8B82;
+    padding-top: 2em;
+    max-width: 400px;
+}
+
+.about-box-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.about-box {
+  height: 440px;
+  width: 410px;
+  border-radius: 35px;
+  background-color: #ADABA5; 
+  box-shadow: 0 0 30px 10px rgba(173, 171, 165, 0.6);
+}
+
+.about-box-title {
+  font-family: var(--family-body);
+  font-weight: 400;
+  font-size: 28px;
+  color: #F6F6F6;
+  letter-spacing: -0.05em;
+  padding-left: 40px;
+  padding-top: 30px;
+}
+
+.about-box-title em {
+  font-family: var(--font-heading);
+  font-style: italic;
+}
+
+.about-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px 40px;
+}
+
+.about-info-row:first-of-type {
+  border-top: none;
+}
+
+.about-info-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  color: #F6F6F6;
+}
+
+.about-info-value {
+    text-align: right;
+}
+
+.about-info-value p {
+    font-family: var(--family-body);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.3em;
+    color: #F6F6F6;
+}
+
+.about-info-desc {
+    font-family: var(--family-body);
+    font-style: italic;
+    font-size: 13px;
+    color: #F6F6F6;
+}
