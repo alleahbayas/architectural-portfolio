@@ -1,5 +1,5 @@
 import "./Projects.css";
-import projects from "../data/projects";
+import projects from "../data/Projects";
 import ProjectCard from "../components/ProjectCard";
 import Logo from "../assets/logo.png";
 

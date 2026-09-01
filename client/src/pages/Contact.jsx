@@ -1,7 +1,12 @@
+import "./Contact.css";
+
 function Contact() {
   return (
-    <div className="p-8 text-center">
-      <h2 className="text-3xl font-bold">Contact</h2>
+    <div className="contact-columns">
+      <div>
+        <h2 className="contact-label"><span className="contact-label-line"></span>
+        GET IN TOUCH</h2>
+      </div>
     </div>
   );
 }

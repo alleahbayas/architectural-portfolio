@@ -1,0 +1,22 @@
+.contact-columns {
+    display: flex;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.contact-label {
+  display: flex;
+  font-family: var(--font-label);
+  font-weight: 300;
+  font-size: 13px;
+  color: #8E8B82;
+  letter-spacing: 0.5em;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-label-line {
+  display: inline-block;
+  width: 30px;
+  height: 0.5px;
+  background-color: #8E8B82;
+}
