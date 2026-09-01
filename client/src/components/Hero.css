@@ -30,14 +30,13 @@
 }
 
 .logo-img {
-  width: 70px;
   height: 44px;
-  object-fit: cover;
-  padding: 4px;
+  width: auto;
+  object-fit: contain;
 }
 
 .logo-text {
-  font-family: var(--font-label);
+  font-family: var(--font-logo);
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 0.5em;
@@ -183,4 +182,4 @@
 .hero-frame::after {
   right: 16px;
   transform: scaleX(-1);
-}
+}  

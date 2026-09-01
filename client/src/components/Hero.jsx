@@ -20,7 +20,6 @@ function Hero() {
 
       <div className="hero-logo">
         <img src={Logo} alt="logo" className="logo-img" />
-        <span className="logo-text">GILLIAN<br />GUTIERREZ</span>
       </div>
 
       <button onClick={() => scrollToSection("contact")} className="hero-cta-button">

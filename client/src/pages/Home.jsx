@@ -7,9 +7,9 @@ function Home() {
   return (
     <div className="hero-frame">
       <Hero />
-      <section id="about"><About /></section>
-      <section id="projects"><Projects /></section>
-      <section id="contact"><Contact /></section>
+      <About />
+      <Projects />
+      <Contact />
     </div>
   );
 }
