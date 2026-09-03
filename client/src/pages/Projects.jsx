@@ -1,4 +1,5 @@
 import "./Projects.css";
+import { Link } from "react-router-dom";
 import projects from "../data/Projects";
 import ProjectCard from "../components/ProjectCard";
 import Logo from "../assets/logo.png";
@@ -11,6 +12,11 @@ function Projects() {
           <div className="logo">
             <img src={Logo} alt="logo" className="logo-img" />
           </div>
+
+          <Link to="/archive" className="project-button">
+            <span className="project-button-text">View Archive</span>
+            <span className="project-button-arrow">-&gt;</span>
+          </Link>
 
           <div className="project-grid">
             <div className="left-content">

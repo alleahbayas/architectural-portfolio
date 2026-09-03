@@ -1,0 +1,130 @@
+#archivr {
+    scroll-margin-top: 110px;
+}
+
+.archive {
+  background-color: #343434;
+  min-height: 100vh;
+  border-radius: 32px;
+  margin: 16px;
+  padding: 40px;
+}
+
+.archive-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.archive-back {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 130px;
+  height: 55px;
+  background-color: white;
+  border-radius: 9999px;
+  padding: 2px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  overflow: hidden;
+  text-decoration: none;
+  border: none;
+  justify-self: start;
+}
+
+.archive-back-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 38px;
+  margin: auto 0;   
+  color: #343434;
+  z-index: 2;
+  transition: color 0.4s ease;
+}
+
+.archive-back-text {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: 4px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #343434;
+  color: #F6F6F6;
+  border-radius: 9999px;
+  padding-right: 16px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  white-space: nowrap;
+  z-index: 1;
+  transition: width 0.4s ease;
+}
+
+.archive-back:hover .archive-back-text {
+  width: calc(100% - 8px);
+}
+
+.archive-back:hover .archive-back-arrow {
+  color: white;
+}
+
+.archive-heading {
+  text-align: center;
+}
+
+.archive-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-label);
+  font-weight: 300;
+  font-size: 13px;
+  color: #D8D2C2;
+  letter-spacing: 0.3em;
+  margin: 0 0 8px;
+}
+
+.archive-label-line {
+  display: inline-block;
+  width: 40px;
+  height: 0.5px;
+  background-color: #D8D2C2;
+}
+
+.archive-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 50px;
+  letter-spacing: -0.06em;
+  color: #F6F6F6;
+  margin: 0;
+}
+
+.archive-title em {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 500;
+  color: #D8D2C2;
+}
+
+.archive-est {
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: #D8D2C2;
+  justify-self: end;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
