@@ -24,9 +24,7 @@ function Hero() {
 
       <button onClick={() => scrollToSection("contact")} className="hero-cta-button">
         <span className="cta-text">Let's Connect</span>
-        <span className="cta-circle">
-          <span className="cta-circle-arrow">-&gt;</span>
-        </span>
+        <span className="cta-circle-arrow">-&gt;</span>
       </button>
 
       <div className="hero-content">
@@ -38,7 +36,8 @@ function Hero() {
         <div className="hero-title-row">
           <h1 className="hero-title"><em>Future</em></h1>
           <button onClick={() => scrollToSection("projects")} className="hero-button">
-            View Projects <span className="cta-arrow">-&gt;</span>
+            <span className="hero-button-text">View Projects</span>
+            <span className="hero-button-arrow">-&gt;</span>
           </button>
         </div>
       </div>
