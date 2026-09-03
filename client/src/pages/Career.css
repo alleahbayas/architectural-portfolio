@@ -1,5 +1,5 @@
 #career {
-  padding: 80px; 
+  padding: 80px 0 0 80px; 
 }
 
 .career-columns {
@@ -190,7 +190,7 @@
 .certificate-box {
   height: fit-content;
   width: 450px;
-  border-radius: 35px;
+  border-radius: 35px 0 0 35px;
   text-align: center;
   background-color: #8E8B82;
   padding: 48px 40px;

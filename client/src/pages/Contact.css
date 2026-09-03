@@ -1,6 +1,25 @@
+#contact {
+  padding: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
 .contact-columns {
-    display: flex;
-    grid-template-columns: repeat(2, 1fr);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-left {
+  flex: 1;
+  margin-left: 80px;
+}
+
+.contact-right {
+  flex: 1;
+  margin: 20px 80px 0 0;
 }
 
 .contact-label {
@@ -12,6 +31,7 @@
   letter-spacing: 0.5em;
   align-items: center;
   gap: 12px;
+  margin: 0 0 16px;
 }
 
 .contact-label-line {
@@ -20,3 +40,143 @@
   height: 0.5px;
   background-color: #8E8B82;
 }
+
+.contact-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 50px;
+  letter-spacing: -0.06em;
+  margin-bottom: 20px;
+  color: #343434;
+}
+
+.contact-title em {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.contact-description {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #343434;
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 0 32px 32px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  color: #8E8B82;
+}
+
+.contact-info-item svg {
+  color: #8E8B82;
+}
+
+.contact-buttons {
+  display: flex;
+  align-self: center;
+  gap: 16px;
+}
+
+.btn-linkedin,
+.btn-cv {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  color: #8E8B82;
+  border: 2px solid #8E8B82;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-linkedin:hover,
+.btn-cv:hover,
+.btn-send:hover {
+  background-color: #8E8B82;
+  color: white;
+  border-color: #8E8B82;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: #343434;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: #ADABA5;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #F6F6F6;
+  resize: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #F6F6F6;
+  font-family: var(--font-body);
+  font-weight: 400;
+  opacity: 60%;
+}
+
+.btn-send {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 2px solid #8E8B82;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: #8E8B82;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+

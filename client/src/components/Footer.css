@@ -1,0 +1,19 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  margin-top: -40px;
+}
+
+.footer-bg-text {
+  text-align: center;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 230px;
+  letter-spacing: -0.06em;
+  color: rgba(142, 139, 130, 0.2);
+  white-space: nowrap;
+  line-height: 1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
