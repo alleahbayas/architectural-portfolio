@@ -116,6 +116,11 @@
     padding: 8px 14px;
     font-size: 12px;
   }
+
+  .hero-frame::before,
+  .hero-frame::after {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {

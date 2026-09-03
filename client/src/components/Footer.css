@@ -28,13 +28,13 @@
 
 @media (max-width: 1024px) {
   .footer-bg-text {
-    font-size: 140px;
+    font-size: 160px;
   }
 }
 
 @media (max-width: 834px) {
   .footer-bg-text {
-    font-size: 90px;
+    font-size: 120px;
   }
 }
 

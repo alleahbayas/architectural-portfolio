@@ -257,7 +257,7 @@
 
 @media (max-width: 1024px) {
   .hero-content {
-    padding: 200px 40px 0;
+    padding: 300px 40px 0;
   }
   .hero-title {
     font-size: 64px;
@@ -270,13 +270,22 @@
     font-size: 17px;
   }
   .hero-cta-button {
-    right: 40px;
+    height: 50px;
+    width: 180px;
+    right: 20px;
   }
 }
 
 @media (max-width: 834px) {
+  .hero {
+    height: auto;
+    min-height: 50vh;
+    margin: 8px;
+    border-radius: 20px;
+  }
+
   .hero-content {
-    padding: 160px 32px 0;
+    padding: 300px 32px 0;
   }
 
   .hero-title {

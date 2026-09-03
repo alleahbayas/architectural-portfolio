@@ -1,4 +1,4 @@
-#archivr {
+#archive {
     scroll-margin-top: 110px;
 }
 
@@ -32,6 +32,7 @@
   text-decoration: none;
   border: none;
   justify-self: start;
+  overflow: hidden;
 }
 
 .archive-back-arrow {
@@ -127,4 +128,30 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+.archive-frame {
+  position: relative;
+  background-color: var(--cream);
+  min-height: 100vh;
+}
+
+.archive-frame::before,
+.archive-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle at 100% 100%, transparent 32px, var(--cream) 33px);
+  z-index: 5;
+}
+
+.archive-frame::before {
+  left: 16px;
+}
+
+.archive-frame::after {
+  right: 16px;
+  transform: scaleX(-1);
 }
