@@ -1,0 +1,242 @@
+#career {
+  padding: 80px; 
+}
+
+.career-columns {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+}
+
+.career-left {
+  flex: 1;
+  margin-top: 20px;
+}
+
+.career-right {
+    flex: 1;
+    margin-top: 40px;
+}
+
+.career-label {
+  display: flex;
+  font-family: var(--font-label);
+  font-weight: 300;
+  font-size: 13px;
+  color: #8e8b82;
+  letter-spacing: 0.5em;
+  align-items: center;
+  gap: 12px;
+}
+
+.career-label-line {
+  display: inline-block;
+  width: 30px;
+  height: 0.5px;
+  background-color: #8e8b82;
+}
+
+.career-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 50px;
+  letter-spacing: -0.06em;
+  margin-bottom: 40px;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline-group:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 17px;        /* dot's bottom edge: dot-cell's padding-top (8px) + dot height (9px) */
+  bottom: -12.5px;   /* reaches into the next row, ending at that dot's vertical center */
+  left: 122px;        /* same x-position as before: col1 width (110px) + half of col2 (24px/2) */
+  width: 1px;
+  background-color: #ddd9cf;
+}
+
+.timeline-group {
+  display: grid;
+  grid-template-columns: 110px 24px 1fr;
+  align-items: baseline;
+  position: relative;
+}
+
+.timeline-year-cell {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 12px;
+  font-family: var(--font-label);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #343434;
+}
+
+.timeline-dot-cell {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.timeline-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #343434;
+  z-index: 1;
+}
+
+.timeline-content-cell {
+  grid-column: 3;
+  padding-left: 24px;
+  padding-bottom: 10px;
+}
+
+.timeline-position {
+  margin-bottom: 15px;
+  padding: 20px 24px;
+  margin-left: -24px; /* offsets the padding so text still lines up when not hovered */
+  border-radius: 12px;
+  transition: background-color 0.25s ease, padding-left 0.25s ease;
+}
+
+.timeline-position:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-position:hover {
+  background-color: #C7C3B9;
+}
+
+.timeline-position:hover .position-title,
+.timeline-position:hover .position-company,
+.timeline-position:hover .position-bullets li {
+  color: #f6f6f6;
+}
+
+.timeline-position:hover .position-date {
+  color: #f6f6f6;
+}
+
+.timeline-position:hover .position-bullets li::before {
+  color: #f2efe9;
+}
+
+.position-title {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 00;
+  font-size: 28px;
+  margin: 0 0 4px 0;
+}
+
+.position-date {
+  font-family: var(--font-label);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding-left: 10px;
+  color: #8e8b82;
+}
+
+.position-company {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  color: #8e8b82;
+  margin: 0 0 10px 0;
+}
+
+.position-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.position-bullets li {
+  position: relative;
+  font-family: var(--font-body);
+  letter-spacing: -0.04em;
+  padding-left: 18px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #343434;
+  margin-bottom: 8px;
+}
+
+.position-bullets li::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 8px;
+  color: #444;
+}
+
+.certificate-box-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.certificate-box {
+  height: fit-content;
+  width: 450px;
+  border-radius: 35px;
+  text-align: center;
+  background-color: #8E8B82;
+  padding: 48px 40px;
+}
+
+.certificate-title {
+  font-family: var(--font-heading);
+  font-weight: 200;
+  font-size: 50px;
+  font-style: italic;
+  color: #F6F6F6;
+  letter-spacing: -0.04em;
+  margin: 0 0 20px;
+}
+
+.certificate-item:last-child {
+  margin-bottom: 0;
+}
+
+.certificate-name {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: white;
+  margin: 0 0 4px;
+}
+
+.certificate-location {
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 4px;
+}
+
+.certificate-year {
+  font-family: var(--font-label);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.certificate-divider {
+  width: 60px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 20px auto;
+}

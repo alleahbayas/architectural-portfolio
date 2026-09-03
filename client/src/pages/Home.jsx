@@ -1,6 +1,7 @@
 import Hero from "../components/Hero";
 import About from "../pages/About";
 import Projects from "../pages/Projects";
+import Career from "../pages/Career";
 import Contact from "../pages/Contact";
 
 function Home() {
@@ -9,6 +10,7 @@ function Home() {
       <Hero />
       <About />
       <Projects />
+      <Career />
       <Contact />
     </div>
   );

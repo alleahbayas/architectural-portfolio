@@ -10,7 +10,7 @@ function Header() {
     { name: "HOME", target: "hero" },
     { name: "ABOUT", target: "about" },
     { name: "PROJECTS", target: "projects" },
-    { name: "CONTACT", target: "contact" },
+    { name: "CAREER", target: "career" },
   ];
 
   const scrollToSection = (id) => {
