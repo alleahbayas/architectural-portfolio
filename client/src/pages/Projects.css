@@ -183,6 +183,14 @@
   border: none;
 }
 
+.project-button-desktop {
+  display: flex;
+}
+
+.project-button-mobile {
+  display: none;
+}
+
 .project-button-text {
   position: absolute;
   top: 4px;
@@ -225,4 +233,126 @@
 
 .project-button:hover .project-button-arrow {
   color: white;
+}
+
+@media (max-width: 1024px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+    margin-top: 100px;
+  }
+
+  .left-content {
+    padding: 15px 32px;
+  }
+
+  .page-title {
+    font-size: 40px;
+  }
+
+  .page-title-accent {
+    transform: translateX(0);
+    text-align: left;
+  }
+
+  .project-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 24px 32px 40px;
+  }
+
+  .project-button {
+    right: 32px;
+  }
+}
+
+@media (max-width: 834px) {
+  .project-background {
+    min-height: auto;
+  }
+
+  .project-grid {
+    margin-top: 90px;
+  }
+
+  .left-content {
+    padding: 15px 28px;
+    gap: 12px;
+  }
+
+  .page-title {
+    font-size: 34px;
+  }
+
+  .project-list {
+    margin-top: 12px;
+  }
+
+  .project-list-item {
+    font-size: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .project-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 28px 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-frame::before,
+  .project-frame::after {
+    display: none;
+  }
+
+  .logo {
+    top: 16px;
+    left: 16px;
+  }
+
+  .logo-img {
+    height: 32px;
+  }
+
+  .project-grid {
+    margin-top: 70px;
+  }
+
+  .left-content {
+    padding: 12px 30px;
+  }
+
+  .page-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+
+  .project-list-item {
+    display: none;
+  }
+
+  .project-cards-grid {
+    padding: 16px 20px 28px;
+    gap: 16px;
+  }
+
+  .project-button-desktop {
+    display: none;
+  }
+
+  .project-button-mobile {
+    display: flex;
+    position: relative;
+    top: -12px;
+    right: auto;
+    width: 180px;
+    height: 55px;
+    margin: 16px auto 24px;
+    z-index: 1;
+  }
 }

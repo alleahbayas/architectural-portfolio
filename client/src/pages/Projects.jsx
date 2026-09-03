@@ -13,7 +13,7 @@ function Projects() {
             <img src={Logo} alt="logo" className="logo-img" />
           </div>
 
-          <Link to="/archive" className="project-button">
+          <Link to="/archive" className="project-button project-button-desktop">
             <span className="project-button-text">View Archive</span>
             <span className="project-button-arrow">-&gt;</span>
           </Link>
@@ -49,6 +49,11 @@ function Projects() {
                 />
               ))}
             </div>
+
+            <Link to="/archive" className="project-button project-button-mobile">
+              <span className="project-button-text">View Archive</span>
+              <span className="project-button-arrow">-&gt;</span>
+            </Link>
           </div>
         </div>
       </div>

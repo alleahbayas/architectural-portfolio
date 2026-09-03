@@ -100,3 +100,68 @@
 .project-card:hover {
   box-shadow: 0 0 40px 5px rgba(216, 210, 194, 0.35);
 }
+
+@media (max-width: 1024px) {
+  .project-card {
+    height: 240px;
+  }
+
+  .project-card-num {
+    font-size: 80px;
+    left: 16px;
+    bottom: 14px;
+  }
+
+  .project-card-info {
+    padding: 16px 16px 16px 76px;
+  }
+
+  .project-card-info h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 834px) {
+  .project-card {
+    height: 280px; /* single-column card can afford to be a bit taller/roomier */
+  }
+
+  .project-card-num {
+    font-size: 64px;
+    left: 16px;
+    bottom: 14px;
+  }
+
+  .project-card-info {
+    padding: 16px 16px 16px 64px;
+  }
+
+  .project-card-info h3 {
+    font-size: 19px;
+  }
+
+  .project-card-info p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-card {
+    height: 240px;
+    border-radius: 16px;
+  }
+
+  .project-card-num {
+    font-size: 48px;
+    left: 14px;
+    bottom: 12px;
+  }
+
+  .project-card-info {
+    padding: 14px 14px 14px 50px;
+  }
+
+  .project-card-info h3 {
+    font-size: 17px;
+  }
+}

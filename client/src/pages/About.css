@@ -1,3 +1,9 @@
+#about {
+  min-height: 100vh;
+  height: auto;
+  overflow: visible;
+}
+
 .about-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr 1fr;
@@ -35,7 +41,7 @@
 
 .about-title {
     display: flex;
-    font-family: var(--family-body);
+    font-family: var(--font-body);
     font-size: 100px;
     font-weight: 500;
     color: #343434;
@@ -46,7 +52,7 @@
 
 .about-description {
     display: flex;
-    font-family: var(--family-body);
+    font-family: var(--font-body);
     font-size: 18px;
     font-weight: 300;
     color: #8E8B82;
@@ -70,7 +76,7 @@
 }
 
 .about-box-title {
-  font-family: var(--family-body);
+  font-family: var(--font-body);
   font-weight: 400;
   font-size: 28px;
   color: #F6F6F6;
@@ -109,7 +115,7 @@
 }
 
 .about-info-value p {
-    font-family: var(--family-body);
+    font-family: var(--font-body);
     font-size: 18px;
     font-weight: 600;
     letter-spacing: -0.03em;
@@ -118,8 +124,123 @@
 }
 
 .about-info-desc {
-    font-family: var(--family-body);
+    font-family: var(--font-body);
     font-style: italic;
     font-size: 13px;
     color: #F6F6F6;
+}
+
+@media (max-width: 1024px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .about-box-wrapper {
+    grid-column: 1 / -1;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .about-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-top: 5%;
+    padding: 20px;
+  }
+
+  .about-label {
+    margin-top: 120px;
+  }
+
+  .about-title {
+    font-size: 64px;
+  }
+}
+
+@media (max-width: 834px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    margin-top: 24px;
+  }
+
+  .about-label {
+    margin-top: 60px;
+  }
+
+  .about-title {
+    font-size: 48px;
+  }
+
+  .about-description {
+    max-width: 100%;
+  }
+
+  .about-box-wrapper {
+    grid-column: auto;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .about-box {
+    width: 100%;
+    max-width: 410px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-label {
+    margin: 20px 0 0 32px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+  }
+
+  .about-title {
+    font-size: 36px;
+    margin-left: 32px;
+  }
+
+  .about-description {
+    font-size: 16px;
+    padding-top: 1.2em;
+    margin-left: 32px;
+    max-width: 85vw;
+  }
+
+  .about-box {
+    height: auto;
+    max-height: none;
+    max-width: 85vw;
+    border-radius: 24px;
+  }
+
+  .about-box-title {
+    font-size: 30px;
+    padding-left: 24px;
+    padding-top: 20px;
+  }
+
+  .about-info-row {
+    padding: 12px 24px;
+  }
+
+  .about-info-value p {
+    font-size: 16px;
+  }
+
+  .about-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    margin-top: 0%;
+  }
 }

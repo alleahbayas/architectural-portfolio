@@ -87,3 +87,130 @@
   color: #F6F6F6;
   font-weight: 600;
 }
+
+.nav-link-desktop-hide {
+  display: none;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #F6F6F6;
+  border: none;
+  color: #8E8B82;
+  cursor: pointer;
+  z-index: 20;
+}
+
+@media (max-width: 834px) {
+  .nav-pill {
+    gap: 16px;
+    padding: 12px 24px;
+  }
+
+  .nav-link {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-bar {
+    left: 16px;
+    right: 16px;
+    justify-content: flex-end;
+  }
+
+  .nav-pill-backdrop {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+    margin: 15px;
+  }
+
+  .hero-frame::before,
+  .hero-frame::after {
+    display: none;
+  }
+
+}
+
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 15;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 78%;
+  max-width: 340px;
+  background-color: #F6F6F6;
+  z-index: 20;
+  padding: 24px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.mobile-drawer-open {
+  transform: translateX(0);
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.mobile-drawer-brand {
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: #8E8B82;
+}
+
+.mobile-drawer-close {
+  background: none;
+  border: none;
+  color: #8E8B82;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mobile-drawer-link {
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  color: #8E8B82;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.mobile-drawer-link-active {
+  color: #343434;
+}

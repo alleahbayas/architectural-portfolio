@@ -1,9 +1,11 @@
 import "./Header.css";
 import { useState, useEffect, useRef } from "react";
+import { Menu, X } from "lucide-react";
 
 function Header() {
   const [activeSection, setActiveSection] = useState("hero");
   const [indicatorStyle, setIndicatorStyle] = useState({});
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRefs = useRef({});
 
   const intersectingIds = useRef(new Set());
@@ -15,11 +17,13 @@ function Header() {
     { name: "ABOUT", target: "about" },
     { name: "PROJECTS", target: "projects" },
     { name: "CAREER", target: "career" },
+    { name: "CONTACT", target: "contact" },
   ];
 
   const scrollToSection = (id) => {
     isProgrammaticScroll.current = true;
     setActiveSection(id);
+    setIsMenuOpen(false);
 
     if (id === "hero") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -89,6 +93,13 @@ function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
   return (
     <div className="header-bar">
       <div className="nav-pill-backdrop">
@@ -100,9 +111,10 @@ function Header() {
               ref={(el) => (navRefs.current[item.target] = el)}
               onClick={() => scrollToSection(item.target)}
               className={
-                activeSection === item.target
+                (activeSection === item.target
                   ? "nav-link nav-link-active"
-                  : "nav-link"
+                  : "nav-link") +
+                (item.target === "contact" ? " nav-link-desktop-hide" : "")
               }
             >
               {item.name}
@@ -110,6 +122,52 @@ function Header() {
           ))}
         </nav>
       </div>
+
+      <button
+        className="mobile-menu-toggle"
+        onClick={() => setIsMenuOpen(true)}
+        aria-label="Open menu"
+      >
+        <Menu size={20} />
+      </button>
+
+      <div
+        className={isMenuOpen ? "mobile-drawer mobile-drawer-open" : "mobile-drawer"}
+      >
+        <div className="mobile-drawer-header">
+          <span className="mobile-drawer-brand">G. GUTIERREZ</span>
+          <button
+            className="mobile-drawer-close"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        <nav className="mobile-drawer-nav">
+          {navItems.map((item) => (
+            <button
+              key={item.target}
+              onClick={() => scrollToSection(item.target)}
+              className={
+                activeSection === item.target
+                  ? "mobile-drawer-link mobile-drawer-link-active"
+                  : "mobile-drawer-link"
+              }
+            >
+              {item.name}
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {isMenuOpen && (
+        <div
+          className="mobile-drawer-overlay"
+          onClick={() => setIsMenuOpen(false)}
+        ></div>
+      )}
     </div>
   );
 }

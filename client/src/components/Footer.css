@@ -17,3 +17,37 @@
   -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
 }
+
+.footer-bg-line {
+  display: inline;
+}
+
+.footer-bg-line:not(:last-child)::after {
+  content: " ";
+}
+
+@media (max-width: 1024px) {
+  .footer-bg-text {
+    font-size: 140px;
+  }
+}
+
+@media (max-width: 834px) {
+  .footer-bg-text {
+    font-size: 90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-bg-text {
+    font-size: 90px;
+  }
+
+  .footer {
+    margin-top: -20px;
+  }
+
+  .footer-bg-line {
+    display: block;
+  }
+}
