@@ -254,3 +254,7 @@
   right: 16px;
   transform: scaleX(-1);
 }
+
+.nav-indicator {
+  transition: left 0.3s ease, width 0.3s ease, opacity 0.25s ease;
+}
