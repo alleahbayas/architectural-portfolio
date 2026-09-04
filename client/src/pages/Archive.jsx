@@ -46,6 +46,7 @@ function Archive() {
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
+              slug={project.slug}
               number={String(index + 1).padStart(2, "0")}
               title={project.title}
               location={project.location}
