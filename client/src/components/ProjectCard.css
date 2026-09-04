@@ -127,13 +127,13 @@
   }
 
   .project-card-num {
-    font-size: 64px;
+    font-size: 90px;
     left: 16px;
     bottom: 14px;
   }
 
   .project-card-info {
-    padding: 16px 16px 16px 64px;
+    padding: 16px 16px 16px 75px;
   }
 
   .project-card-info h3 {
@@ -152,13 +152,13 @@
   }
 
   .project-card-num {
-    font-size: 48px;
+    font-size: 80px;
     left: 14px;
     bottom: 12px;
   }
 
   .project-card-info {
-    padding: 14px 14px 14px 50px;
+    padding: 14px 14px 14px 80px;
   }
 
   .project-card-info h3 {
