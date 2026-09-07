@@ -12,8 +12,11 @@ function Archive() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     fetch(`${API_URL}/projects`)
-      .then((res) => res.json())
-      .then((data) => setProjects(data))
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setProjects(data))  // <-- add this back
       .catch((err) => console.error("Failed to load projects:", err));
   }, []);
 

@@ -10,8 +10,11 @@ function Projects() {
 
   useEffect(() => {
     fetch(`${API_URL}/projects`)
-      .then((res) => res.json())
-      .then((data) => setProjects(data.slice(0, 4))) // "selected works" = show a few
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setProjects(data.slice(0, 4)))
       .catch((err) => console.error("Failed to load projects:", err));
   }, []);
 
