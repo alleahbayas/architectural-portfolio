@@ -1,17 +1,26 @@
 import "./Overview.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, PenLine, User, MapPin } from "lucide-react";
-import projects from "../data/Projects";
+import API_URL from "../api";
 import Footer from "../components/Footer";
 
 function Overview() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const project = projects.find((p) => p.slug === slug);
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+    setLoading(true);
+    fetch(`${API_URL}/projects/${slug}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        setProject(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, [slug]);
 
   const handleBack = () => {
@@ -20,6 +29,14 @@ function Overview() {
       document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
+
+  if (loading) {
+    return (
+      <div className="detail-frame">
+        <p style={{ padding: 40 }}>Loading...</p>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -158,34 +175,34 @@ function Overview() {
 
       {/* --- 003 - Brand Zoning --- */}
       {project.brandZoning && (
-          <>
-            <div className="detail-brand-section">
-              <div className="detail-brand-block">
-                {project.brandZoning.images && project.brandZoning.images[0] && (
+        <>
+          <div className="detail-brand-section">
+            <div className="detail-brand-block">
+              {project.brandZoning.images && project.brandZoning.images[0] && (
+                <img
+                  src={project.brandZoning.images[0]}
+                  alt={`${project.title} brand zoning`}
+                  className="detail-brand-img"
+                />
+              )}
+              {project.brandZoning.images && project.brandZoning.images[1] && (
+                <div className="detail-brand-grid">
                   <img
-                    src={project.brandZoning.images[0]}
-                    alt={`${project.title} brand zoning`}
-                    className="detail-brand-img"
+                    src={project.brandZoning.images[1]}
+                    alt={`${project.title} brand zoning secondary`}
+                    className="detail-brand-img-small"
                   />
-                )}
-                {project.brandZoning.images && project.brandZoning.images[1] && (
-                  <div className="detail-brand-grid">
-                    <img
-                      src={project.brandZoning.images[1]}
-                      alt={`${project.title} brand zoning secondary`}
-                      className="detail-brand-img-small"
-                    />
-                    <div>
-                      <span className="brand-num">03</span>
-                      <span className="brand-label">BRAND ZONING</span>
-                      <p className="detail-brand-note">{project.brandZoning.description}</p>
-                    </div>
+                  <div>
+                    <span className="brand-num">03</span>
+                    <span className="brand-label">BRAND ZONING</span>
+                    <p className="detail-brand-note">{project.brandZoning.description}</p>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-          </>
-        )}
+          </div>
+        </>
+      )}
 
       {/* --- 04 - Construction --- */}
       {project.constructionImages && (

@@ -1,15 +1,20 @@
 import "./Archive.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import projects from "../data/Projects";
+import API_URL from "../api";
 import ProjectCard from "../components/ProjectCard";
 
 function Archive() {
+  const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+    fetch(`${API_URL}/projects`)
+      .then((res) => res.json())
+      .then((data) => setProjects(data))
+      .catch((err) => console.error("Failed to load projects:", err));
   }, []);
 
   const handleBack = () => {
@@ -45,7 +50,7 @@ function Archive() {
         <div className="archive-grid">
           {projects.map((project, index) => (
             <ProjectCard
-              key={project.id}
+              key={project._id}
               slug={project.slug}
               number={String(index + 1).padStart(2, "0")}
               title={project.title}

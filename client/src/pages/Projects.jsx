@@ -1,10 +1,20 @@
 import "./Projects.css";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import projects from "../data/Projects";
+import API_URL from "../api";
 import ProjectCard from "../components/ProjectCard";
 import Logo from "../assets/logo.png";
 
 function Projects() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/projects`)
+      .then((res) => res.json())
+      .then((data) => setProjects(data.slice(0, 4))) // "selected works" = show a few
+      .catch((err) => console.error("Failed to load projects:", err));
+  }, []);
+
   return (
     <section id="projects">
       <div className="project-frame">
@@ -31,7 +41,7 @@ function Projects() {
 
               <ul className="project-list">
                 {projects.map((project) => (
-                  <li key={project.id} className="project-list-item">
+                  <li key={project._id} className="project-list-item">
                     {project.title}
                   </li>
                 ))}
@@ -41,7 +51,7 @@ function Projects() {
             <div className="project-cards-grid">
               {projects.map((project, index) => (
                 <ProjectCard
-                  key={project.id}
+                  key={project._id}
                   slug={project.slug}
                   number={String(index + 1).padStart(2, "0")}
                   title={project.title}
