@@ -10,7 +10,12 @@ import upload from "./cloudinary.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://gillian-gutierrez.vercel.app",
+  ],
+}));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
