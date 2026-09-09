@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Plus, Pencil, Trash2, LogOut } from "lucide-react";
 import API_URL from "../api";
 import { authFetch } from "../utils/authFetch";
+import Loading from "../components/Loading";
 
 function Dashboard() {
   const [projects, setProjects] = useState([]);
@@ -37,7 +38,7 @@ function Dashboard() {
     navigate("/admin/login");
   };
 
-  if (loading) return <div className="admin-dashboard">Loading...</div>;
+  if (loading) return <Loading />;
 
   return (
     <div className="admin-dashboard">

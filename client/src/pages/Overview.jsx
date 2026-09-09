@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, PenLine, User, MapPin } from "lucide-react";
 import API_URL from "../api";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 
 function Overview() {
   const { slug } = useParams();
@@ -14,13 +15,23 @@ function Overview() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     setLoading(true);
+
+    const startTime = Date.now();
+
     fetch(`${API_URL}/projects/${slug}`)
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        setProject(data);
-        setLoading(false);
+        setProject(data); // set immediately so the loading screen can show its title
+
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(2000 - elapsed, 0);
+        setTimeout(() => setLoading(false), remaining);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(2000 - elapsed, 0);
+        setTimeout(() => setLoading(false), remaining);
+      });
   }, [slug]);
 
   const handleBack = () => {
@@ -32,9 +43,12 @@ function Overview() {
 
   if (loading) {
     return (
-      <div className="detail-frame">
-        <p style={{ padding: 40 }}>Loading...</p>
-      </div>
+      <Loading
+        label="PROJECT OVERVIEW"
+        titleMain={project?.title}
+        titleAccent={project?.subtitle}
+        subLabel={project?.meta?.location || project?.location}
+      />
     );
   }
 
@@ -125,20 +139,25 @@ function Overview() {
             )}
 
             {project.brief && (
-              <div className="detail-brief">
-                <span className="brief-num">01</span>
-                <span className="brief-label">OVERVIEW</span>
-                <div className="brief-question-block">
-                  <span className="brief-intro">{project.brief.intro}</span>
-                  <h2 className="brief-question">{project.brief.question}</h2>
+              <>
+                <div className="brief-num-row">
+                  <span className="brief-num">01</span>
+                  <span className="section-line"></span>
+                  <span className="brief-label">OVERVIEW</span>
                 </div>
-                <div className="brief-desc-block">
-                  {project.brief.description.split("\n\n").map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                  <span className="brief-desc-line"></span>
+                <div className="detail-brief">
+                  <div className="brief-question-block">
+                    <span className="brief-intro">{project.brief.intro}</span>
+                    <h2 className="brief-question">{project.brief.question}</h2>
+                  </div>
+                  <div className="brief-desc-block">
+                    {project.brief.description.split("\n\n").map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                    <span className="brief-desc-line"></span>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </>
@@ -146,70 +165,76 @@ function Overview() {
 
       {/* --- 002 - Approach & Fixtures --- */}
       {project.approach && (
-        <div className="detail-features-row">
-          <span className="section-num">02</span>
-          <span className="section-label">APPROACH &amp; FIXTURES</span>
-          <div className="detail-features-list">
-            <p className="approach-description">{project.approach.description}</p>
-
-            {project.approach.features?.map((feature, i) => (
-              <div key={i} className="feature-item">
-                <span className="feature-index">{["i", "ii", "iii", "iv", "v"][i] || i + 1}.</span>
-                <div>
-                  <h4>{feature.title}</h4>
-                  <p>{feature.description}</p>
-                </div>
-              </div>
-            ))}
+        <>
+          <div className="approach-num-row">
+            <span className="section-num">02</span>
+            <span className="dark-section-line"></span>
+            <span className="section-label">APPROACH &amp; FIXTURES</span>
           </div>
-
-          {project.approach.images && (
-            <div className="detail-side-images">
-              {project.approach.images.map((img, i) => (
-                <img key={i} src={img} alt={`${project.title} approach ${i + 1}`} />
+          <div className="detail-features-row">
+            <div className="detail-features-list">
+              <p className="approach-description">{project.approach.description}</p>
+              {project.approach.features?.map((feature, i) => (
+                <div key={i} className="feature-item">
+                  <span className="feature-index">{["i", "ii", "iii", "iv", "v"][i] || i + 1}.</span>
+                  <div>
+                    <h4>{feature.title}</h4>
+                    <p>{feature.description}</p>
+                  </div>
+                </div>
               ))}
             </div>
-          )}
-        </div>
+
+            {project.approach.images && (
+              <div className="detail-side-images">
+                {project.approach.images.map((img, i) => (
+                  <img key={i} src={img} alt={`${project.title} approach ${i + 1}`} />
+                ))}
+              </div>
+            )}
+          </div>
+        </>
       )}
 
       {/* --- 003 - Brand Zoning --- */}
       {project.brandZoning && (
-        <>
-          <div className="detail-brand-section">
-            <div className="detail-brand-block">
-              {project.brandZoning.images && project.brandZoning.images[0] && (
+        <div className="detail-brand-section">
+          <div className="detail-brand-block">
+            {project.brandZoning.images && project.brandZoning.images[0] && (
+              <img
+                src={project.brandZoning.images[0]}
+                alt={`${project.title} brand zoning`}
+                className="detail-brand-img"
+              />
+            )}
+            {project.brandZoning.images && project.brandZoning.images[1] && (
+              <div className="detail-brand-grid">
                 <img
-                  src={project.brandZoning.images[0]}
-                  alt={`${project.title} brand zoning`}
-                  className="detail-brand-img"
+                  src={project.brandZoning.images[1]}
+                  alt={`${project.title} brand zoning secondary`}
+                  className="detail-brand-img-small"
                 />
-              )}
-              {project.brandZoning.images && project.brandZoning.images[1] && (
-                <div className="detail-brand-grid">
-                  <img
-                    src={project.brandZoning.images[1]}
-                    alt={`${project.title} brand zoning secondary`}
-                    className="detail-brand-img-small"
-                  />
-                  <div>
+                <div>
+                  <div className="brand-num-row">
                     <span className="brand-num">03</span>
+                    <span className="section-line"></span>
                     <span className="brand-label">BRAND ZONING</span>
-                    <p className="detail-brand-note">{project.brandZoning.description}</p>
                   </div>
+                  <p className="detail-brand-note">{project.brandZoning.description}</p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        </>
+        </div>
       )}
 
       {/* --- 04 - Construction --- */}
       {project.constructionImages && (
         <div className="detail-construction">
           <div className="section-num-row">
-            <span className="construction-num">04</span>
-            <span className="construction-label">CONSTRUCTION</span>
+              <span className="construction-num">04</span>
+              <span className="dark-section-line"></span>
+              <span className="construction-label">CONSTRUCTION</span>
           </div>
           <div className="construction-grid">
             {project.constructionImages.map((img, i) => (

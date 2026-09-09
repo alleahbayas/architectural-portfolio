@@ -42,8 +42,8 @@ function Hero() {
         </div>
       </div>
       <p className="hero-blurb">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        A curated collection of architectural projects exploring space, 
+        material, light, and the relationship between people and their surroundings.
       </p>
     </section>
   );

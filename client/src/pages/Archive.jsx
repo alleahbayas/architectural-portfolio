@@ -4,20 +4,35 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import API_URL from "../api";
 import ProjectCard from "../components/ProjectCard";
+import Loading from "../components/Loading";
 
 function Archive() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+
+    const startTime = Date.now();
+
     fetch(`${API_URL}/projects`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
+      .then((res) => res.json())
+      .then((data) => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(3000 - elapsed, 0);
+
+        setTimeout(() => {
+          setProjects(data);
+          setLoading(false);
+        }, remaining);
       })
-      .then((data) => setProjects(data))  // <-- add this back
-      .catch((err) => console.error("Failed to load projects:", err));
+      .catch((err) => {
+        console.error("Failed to load projects:", err);
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(3000 - elapsed, 0);
+        setTimeout(() => setLoading(false), remaining);
+      });
   }, []);
 
   const handleBack = () => {
@@ -26,6 +41,8 @@ function Archive() {
       document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
+
+  if (loading) return <Loading label="THE ARCHIVE" titleMain="Works in" titleAccent="Retrospect" />;
 
   return (
     <div className="archive-frame">
