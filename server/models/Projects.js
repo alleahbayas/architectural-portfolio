@@ -28,6 +28,18 @@ const brandZoningSchema = new mongoose.Schema({
   images: [String],
 }, { _id: false });
 
+const sectionConfigSchema = new mongoose.Schema({
+  num: String,
+  label: String,
+}, { _id: false });
+
+const sectionsSchema = new mongoose.Schema({
+  overview: sectionConfigSchema,
+  features: sectionConfigSchema,
+  brandZoning: sectionConfigSchema,
+  construction: sectionConfigSchema,
+}, { _id: false });
+
 const projectSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
   title: { type: String, required: true },
@@ -42,6 +54,8 @@ const projectSchema = new mongoose.Schema({
   brandZoning: brandZoningSchema,
   constructionImages: [String],
   constructionNote: String,
+  sections: sectionsSchema,
+  visible: { type: Boolean, default: true },
 }, { timestamps: true });
 
 const Project = mongoose.model("Project", projectSchema);

@@ -1,6 +1,6 @@
 import "./Overview.css";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, PenLine, User, MapPin } from "lucide-react";
 import API_URL from "../api";
 import Footer from "../components/Footer";
@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 function Overview() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +22,7 @@ function Overview() {
     fetch(`${API_URL}/projects/${slug}`)
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        setProject(data); // set immediately so the loading screen can show its title
+        setProject(data);
 
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(2000 - elapsed, 0);
@@ -35,10 +36,13 @@ function Overview() {
   }, [slug]);
 
   const handleBack = () => {
-    navigate("/");
-    setTimeout(() => {
-      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    const from = location.state?.from;
+
+    if (from === "archive") {
+      navigate("/archive");
+    } else {
+      navigate("/", { state: { scrollTo: "projects" } });
+    }
   };
 
   if (loading) {
@@ -63,6 +67,13 @@ function Overview() {
     );
   }
 
+  const overviewSection = project.sections?.overview || { num: "01", label: "OVERVIEW" };
+  const featuresSection = project.sections?.features || { num: "02", label: "FEATURES" };
+  const brandZoningSection = project.sections?.brandZoning || { num: "03", label: "BRAND ZONING" };
+  const constructionSection = project.sections?.construction || { num: "04", label: "CONSTRUCTION" };
+
+  const hasQuestionBlock = Boolean(project.brief?.intro || project.brief?.question);
+
   return (
     <div className="detail-frame">
       {/* --- Hero --- */}
@@ -78,7 +89,7 @@ function Overview() {
           )}
 
           <h1 className="detail-title">
-            {project.title}
+            {project.title}<span>-</span>
             <br />
             <em>{project.subtitle}</em>
           </h1>
@@ -96,80 +107,80 @@ function Overview() {
         ></div>
       </section>
 
-      {/* --- 001 - Overview --- */}
+      {/* --- 01 - Overview --- */}
       {(project.meta || project.brief) && (
-        <>
-          <div className="detail-overview-card">
-            {project.meta && (
-              <div className="detail-meta-row">
-                {project.meta.projectType && (
-                  <div className="meta-item">
-                    <span className="meta-icon">
-                      <PenLine size={18} />
-                    </span>
-                    <div className="meta-text">
-                      <span className="meta-label">PROJECT TYPE</span>
-                      <span className="meta-value">{project.meta.projectType}</span>
-                    </div>
+        <div className="detail-overview-card">
+          {project.meta && (
+            <div className="detail-meta-row">
+              {project.meta.projectType && (
+                <div className="meta-item">
+                  <span className="meta-icon">
+                    <PenLine size={18} />
+                  </span>
+                  <div className="meta-text">
+                    <span className="meta-label">PROJECT TYPE</span>
+                    <span className="meta-value">{project.meta.projectType}</span>
                   </div>
-                )}
-                {project.meta.designer && (
-                  <div className="meta-item">
-                    <span className="meta-icon">
-                      <User size={18} />
-                    </span>
-                    <div className="meta-text">
-                      <span className="meta-label">PROJECT ROLE</span>
-                      <span className="meta-value">{project.meta.designer}</span>
-                    </div>
-                  </div>
-                )}
-                {project.meta.location && (
-                  <div className="meta-item">
-                    <span className="meta-icon">
-                      <MapPin size={18} />
-                    </span>
-                    <div className="meta-text">
-                      <span className="meta-label">LOCATION</span>
-                      <span className="meta-value">{project.meta.location}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {project.brief && (
-              <>
-                <div className="brief-num-row">
-                  <span className="brief-num">01</span>
-                  <span className="section-line"></span>
-                  <span className="brief-label">OVERVIEW</span>
                 </div>
-                <div className="detail-brief">
+              )}
+              {project.meta.designer && (
+                <div className="meta-item">
+                  <span className="meta-icon">
+                    <User size={18} />
+                  </span>
+                  <div className="meta-text">
+                    <span className="meta-label">PROJECT ROLE</span>
+                    <span className="meta-value">{project.meta.designer}</span>
+                  </div>
+                </div>
+              )}
+              {project.meta.location && (
+                <div className="meta-item">
+                  <span className="meta-icon">
+                    <MapPin size={18} />
+                  </span>
+                  <div className="meta-text">
+                    <span className="meta-label">LOCATION</span>
+                    <span className="meta-value">{project.meta.location}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {project.brief && (
+            <>
+              <div className="brief-num-row">
+                <span className="brief-num">{overviewSection.num}</span>
+                <span className="section-line"></span>
+                <span className="brief-label">{overviewSection.label}</span>
+              </div>
+              <div className={`detail-brief ${!hasQuestionBlock ? "detail-brief-single" : ""}`}>
+                {hasQuestionBlock && (
                   <div className="brief-question-block">
                     <span className="brief-intro">{project.brief.intro}</span>
                     <h2 className="brief-question">{project.brief.question}</h2>
                   </div>
-                  <div className="brief-desc-block">
-                    {project.brief.description.split("\n\n").map((para, i) => (
-                      <p key={i}>{para}</p>
-                    ))}
-                    <span className="brief-desc-line"></span>
-                  </div>
+                )}
+                <div className="brief-desc-block">
+                  {project.brief.description.split("\n\n").map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                  <span className="brief-desc-line"></span>
                 </div>
-              </>
-            )}
-          </div>
-        </>
+              </div>
+            </>
+          )}
+        </div>
       )}
 
-      {/* --- 002 - Approach & Fixtures --- */}
+      {/* --- 02 - Features --- */}
       {project.approach && (
         <>
           <div className="approach-num-row">
-            <span className="section-num">02</span>
+            <span className="section-num">{featuresSection.num}</span>
             <span className="dark-section-line"></span>
-            <span className="section-label">APPROACH &amp; FIXTURES</span>
+            <span className="section-label">{featuresSection.label}</span>
           </div>
           <div className="detail-features-row">
             <div className="detail-features-list">
@@ -196,7 +207,7 @@ function Overview() {
         </>
       )}
 
-      {/* --- 003 - Brand Zoning --- */}
+      {/* --- 03 - Brand Zoning --- */}
       {project.brandZoning && (
         <div className="detail-brand-section">
           <div className="detail-brand-block">
@@ -216,9 +227,9 @@ function Overview() {
                 />
                 <div>
                   <div className="brand-num-row">
-                    <span className="brand-num">03</span>
+                    <span className="brand-num">{brandZoningSection.num}</span>
                     <span className="section-line"></span>
-                    <span className="brand-label">BRAND ZONING</span>
+                    <span className="brand-label">{brandZoningSection.label}</span>
                   </div>
                   <p className="detail-brand-note">{project.brandZoning.description}</p>
                 </div>
@@ -232,9 +243,9 @@ function Overview() {
       {project.constructionImages && (
         <div className="detail-construction">
           <div className="section-num-row">
-              <span className="construction-num">04</span>
-              <span className="dark-section-line"></span>
-              <span className="construction-label">CONSTRUCTION</span>
+            <span className="construction-num">{constructionSection.num}</span>
+            <span className="dark-section-line"></span>
+            <span className="construction-label">{constructionSection.label}</span>
           </div>
           <div className="construction-grid">
             {project.constructionImages.map((img, i) => (

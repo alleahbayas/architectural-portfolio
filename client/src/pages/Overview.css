@@ -173,7 +173,7 @@
 .brief-question-block {
   display: flex;
   flex-direction: column;
-  margin-left: 8em;
+  margin-left: 9em;
 }
 
 .brief-num {
@@ -225,7 +225,8 @@
   line-height: 1.7;
   max-width: 95%;
   color: #F6F6F6;
-  margin: 0 0 16px;
+  margin: 0 0 0 16px;
+  padding-left: 16px;
 }
 
 .brief-desc-line {
@@ -446,6 +447,14 @@
   align-items: center;
   width: 100%;
   margin: 3em 0 3em 0;
+}
+
+.detail-brief-single {
+  grid-template-columns: 1fr;
+}
+
+.detail-brief-single .brief-desc-block {
+  margin-right: 0;
 }
 
 /* ===============================

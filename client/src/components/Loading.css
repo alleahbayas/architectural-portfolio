@@ -80,5 +80,7 @@
     .loading-title {
     font-size: 55px;
     line-height: 0.9em;
+    margin-left: 10px;
+    margin-right: 10px;
     }
 }

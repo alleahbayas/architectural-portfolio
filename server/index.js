@@ -87,9 +87,17 @@ app.post("/api/projects", requireAuth, async (req, res) => {
 // UPDATE a project (protected)
 app.put("/api/projects/:id", requireAuth, async (req, res) => {
   try {
+    console.log("=== Incoming PUT request ===");
+    console.log("req.body.sections:", JSON.stringify(req.body.sections, null, 2));
+
     const updated = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+    console.log("=== Saved document ===");
+    console.log("updated.sections:", JSON.stringify(updated.sections, null, 2));
+
     res.json(updated);
   } catch (err) {
+    console.error("Update error:", err);
     res.status(400).json({ error: err.message });
   }
 });
@@ -104,10 +112,10 @@ app.delete("/api/projects/:id", requireAuth, async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
 app.post("/api/upload", requireAuth, upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
   res.json({ url: req.file.path });
 });
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,6 +1,7 @@
 import "./ProjectForm.css";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Plus, X } from "lucide-react";
 import API_URL from "../api";
 import { authFetch } from "../utils/authFetch";
 
@@ -18,6 +19,20 @@ const emptyProject = {
   brandZoning: { description: "", images: [] },
   constructionImages: [],
   constructionNote: "",
+  sections: {
+    overview: { num: "01", label: "OVERVIEW" },
+    features: { num: "02", label: "FEATURES" },
+    brandZoning: { num: "03", label: "BRAND ZONING" },
+    construction: { num: "04", label: "CONSTRUCTION" },
+  },
+  visible: true,
+};
+
+// Set the image cap per section here. Change brandZoning to whatever limit you want.
+const MAX_IMAGES_BY_SECTION = {
+  approach: 3,
+  brandZoning: 2,
+  constructionImages: 3,
 };
 
 function ProjectForm() {
@@ -45,6 +60,13 @@ function ProjectForm() {
               brief: { ...emptyProject.brief, ...existing.brief },
               approach: { ...emptyProject.approach, ...existing.approach },
               brandZoning: { ...emptyProject.brandZoning, ...existing.brandZoning },
+              sections: {
+                overview: { ...emptyProject.sections.overview, ...existing.sections?.overview },
+                features: { ...emptyProject.sections.features, ...existing.sections?.features },
+                brandZoning: { ...emptyProject.sections.brandZoning, ...existing.sections?.brandZoning },
+                construction: { ...emptyProject.sections.construction, ...existing.sections?.construction },
+              },
+              visible: existing.visible !== undefined ? existing.visible : true,
             });
           }
           setLoading(false);
@@ -60,6 +82,17 @@ function ProjectForm() {
     setForm((prev) => ({
       ...prev,
       [section]: { ...prev[section], [field]: value },
+    }));
+  };
+
+  // For sections.overview.num, sections.features.label, etc.
+  const updateSectionField = (sectionKey, field, value) => {
+    setForm((prev) => ({
+      ...prev,
+      sections: {
+        ...prev.sections,
+        [sectionKey]: { ...prev.sections[sectionKey], [field]: value },
+      },
     }));
   };
 
@@ -93,15 +126,14 @@ function ProjectForm() {
 
   // ---- Image upload helpers -------------------------------------------
 
-  // Uploads a single File to the backend and returns the hosted URL.
   const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
 
-    const token = localStorage.getItem("adminToken"); // match whatever key you store the admin token under
+    const token = localStorage.getItem("adminToken");
     const res = await fetch(`${API_URL}/upload`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}` }, // no Content-Type here — browser sets the multipart boundary
+      headers: { Authorization: `Bearer ${token}` },
       body: formData,
     });
 
@@ -112,7 +144,6 @@ function ProjectForm() {
     return data.url;
   };
 
-  // For the single "Main Image" field.
   const handleSingleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -126,20 +157,37 @@ function ProjectForm() {
       setError("Image upload failed. Please try again.");
     } finally {
       setUploading(false);
-      e.target.value = ""; // lets the user re-select the same file if needed
+      e.target.value = "";
     }
   };
 
-  // For the array fields: approach.images, brandZoning.images, constructionImages.
-  // Supports selecting multiple files at once.
+  const removeMainImage = () => {
+    updateField("image", "");
+  };
+
+  const getListImages = (section) =>
+    section === "constructionImages" ? form.constructionImages : form[section].images;
+
   const handleListImageUpload = async (e, section) => {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
+    const maxImages = MAX_IMAGES_BY_SECTION[section];
+    const currentCount = getListImages(section).length;
+    const remainingSlots = maxImages - currentCount;
+
+    if (remainingSlots <= 0) {
+      setError(`You can only add up to ${maxImages} images here.`);
+      e.target.value = "";
+      return;
+    }
+
+    const filesToUpload = files.slice(0, remainingSlots);
+
     setUploading(true);
     setError("");
     try {
-      const urls = await Promise.all(files.map(uploadFile));
+      const urls = await Promise.all(filesToUpload.map(uploadFile));
       if (section === "constructionImages") {
         setForm((prev) => ({
           ...prev,
@@ -205,12 +253,31 @@ function ProjectForm() {
 
   if (loading) return <div className="admin-form-page">Loading...</div>;
 
+  const renderAddImageSlot = (section) => {
+    const maxImages = MAX_IMAGES_BY_SECTION[section];
+    const count = getListImages(section).length;
+    if (count >= maxImages) return null;
+
+    return (
+      <label className="admin-image-add-slot">
+        <Plus size={20} />
+        <span>{count}/{maxImages}</span>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => handleListImageUpload(e, section)}
+        />
+      </label>
+    );
+  };
+
   return (
     <div className="admin-form-page">
       <form onSubmit={handleSubmit} className="admin-form">
         <h1>{isEditing ? "Edit Project" : "Add New Project"}</h1>
 
-        <h2>Basic Info</h2>
+        <h2>Main Page</h2>
         <label>Slug (URL-friendly, e.g. sm-beauty)</label>
         <input value={form.slug} onChange={(e) => updateField("slug", e.target.value)} required />
 
@@ -224,10 +291,21 @@ function ProjectForm() {
         <input value={form.location} onChange={(e) => updateField("location", e.target.value)} />
 
         <label>Main Image</label>
-        {form.image && (
-          <img src={form.image} alt="Main preview" className="admin-image-preview" />
+        {form.image ? (
+          <div className="admin-image-preview-wrapper">
+            <img src={form.image} alt="Main preview" className="admin-image-preview" />
+            <button
+              type="button"
+              onClick={removeMainImage}
+              aria-label="Remove main image"
+              className="admin-image-remove-btn"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        ) : (
+          <input type="file" accept="image/*" onChange={handleSingleImageUpload} />
         )}
-        <input type="file" accept="image/*" onChange={handleSingleImageUpload} />
         {uploading && <p>Uploading...</p>}
 
         <label>Category</label>
@@ -236,17 +314,31 @@ function ProjectForm() {
         <label>Disclaimer</label>
         <textarea value={form.disclaimer} onChange={(e) => updateField("disclaimer", e.target.value)} />
 
-        <h2>Meta</h2>
+        <h2>Details</h2>
         <label>Project Type</label>
         <input value={form.meta.projectType} onChange={(e) => updateNested("meta", "projectType", e.target.value)} />
 
-        <label>Designer / Role</label>
+        <label>Project Role</label>
         <input value={form.meta.designer} onChange={(e) => updateNested("meta", "designer", e.target.value)} />
 
-        <label>Meta Location</label>
+        <label>Location</label>
         <input value={form.meta.location} onChange={(e) => updateNested("meta", "location", e.target.value)} />
 
-        <h2>Brief</h2>
+        <h2>Introduction</h2>
+        <label>Section Number</label>
+        <input
+          value={form.sections.overview.num}
+          onChange={(e) => updateSectionField("overview", "num", e.target.value)}
+          placeholder="01"
+        />
+
+        <label>Section Label</label>
+        <input
+          value={form.sections.overview.label}
+          onChange={(e) => updateSectionField("overview", "label", e.target.value)}
+          placeholder="OVERVIEW"
+        />
+
         <label>Intro line</label>
         <input value={form.brief.intro} onChange={(e) => updateNested("brief", "intro", e.target.value)} />
 
@@ -256,11 +348,25 @@ function ProjectForm() {
         <label>Description</label>
         <textarea rows={5} value={form.brief.description} onChange={(e) => updateNested("brief", "description", e.target.value)} />
 
-        <h2>Approach &amp; Fixtures</h2>
+        <h2>Features</h2>
+        <label>Section Number</label>
+        <input
+          value={form.sections.features.num}
+          onChange={(e) => updateSectionField("features", "num", e.target.value)}
+          placeholder="02"
+        />
+
+        <label>Section Label</label>
+        <input
+          value={form.sections.features.label}
+          onChange={(e) => updateSectionField("features", "label", e.target.value)}
+          placeholder="FEATURES"
+        />
+
         <label>Description</label>
         <textarea value={form.approach.description} onChange={(e) => updateNested("approach", "description", e.target.value)} />
 
-        <label>Images</label>
+        <label>Images (max {MAX_IMAGES_BY_SECTION.approach})</label>
         <div className="admin-image-grid">
           {form.approach.images.map((url, i) => (
             <div key={i} className="admin-image-thumb">
@@ -268,8 +374,8 @@ function ProjectForm() {
               <button type="button" onClick={() => removeListImage("approach", i)}>×</button>
             </div>
           ))}
+          {renderAddImageSlot("approach")}
         </div>
-        <input type="file" accept="image/*" multiple onChange={(e) => handleListImageUpload(e, "approach")} />
 
         <div className="admin-feature-list">
           {form.approach.features.map((feature, i) => (
@@ -295,10 +401,24 @@ function ProjectForm() {
         </div>
 
         <h2>Brand Zoning</h2>
+        <label>Section Number</label>
+        <input
+          value={form.sections.brandZoning.num}
+          onChange={(e) => updateSectionField("brandZoning", "num", e.target.value)}
+          placeholder="03"
+        />
+
+        <label>Section Label</label>
+        <input
+          value={form.sections.brandZoning.label}
+          onChange={(e) => updateSectionField("brandZoning", "label", e.target.value)}
+          placeholder="BRAND ZONING"
+        />
+
         <label>Description</label>
         <textarea value={form.brandZoning.description} onChange={(e) => updateNested("brandZoning", "description", e.target.value)} />
 
-        <label>Images</label>
+        <label>Images (max {MAX_IMAGES_BY_SECTION.brandZoning})</label>
         <div className="admin-image-grid">
           {form.brandZoning.images.map((url, i) => (
             <div key={i} className="admin-image-thumb">
@@ -306,11 +426,25 @@ function ProjectForm() {
               <button type="button" onClick={() => removeListImage("brandZoning", i)}>×</button>
             </div>
           ))}
+          {renderAddImageSlot("brandZoning")}
         </div>
-        <input type="file" accept="image/*" multiple onChange={(e) => handleListImageUpload(e, "brandZoning")} />
 
         <h2>Construction</h2>
-        <label>Images</label>
+        <label>Section Number</label>
+        <input
+          value={form.sections.construction.num}
+          onChange={(e) => updateSectionField("construction", "num", e.target.value)}
+          placeholder="04"
+        />
+
+        <label>Section Label</label>
+        <input
+          value={form.sections.construction.label}
+          onChange={(e) => updateSectionField("construction", "label", e.target.value)}
+          placeholder="CONSTRUCTION"
+        />
+
+        <label>Images (max {MAX_IMAGES_BY_SECTION.constructionImages})</label>
         <div className="admin-image-grid">
           {form.constructionImages.map((url, i) => (
             <div key={i} className="admin-image-thumb">
@@ -318,14 +452,26 @@ function ProjectForm() {
               <button type="button" onClick={() => removeListImage("constructionImages", i)}>×</button>
             </div>
           ))}
+          {renderAddImageSlot("constructionImages")}
         </div>
-        <input type="file" accept="image/*" multiple onChange={(e) => handleListImageUpload(e, "constructionImages")} />
 
         <label>Construction Note</label>
         <textarea value={form.constructionNote} onChange={(e) => updateField("constructionNote", e.target.value)} />
 
         {uploading && <p className="admin-form-uploading">Uploading image(s)...</p>}
         {error && <p className="admin-form-error">{error}</p>}
+
+        <label className="admin-toggle-row">
+          <span className="admin-toggle-label">Show on Projects Page</span>
+          <span className="admin-toggle">
+            <input
+              type="checkbox"
+              checked={form.visible}
+              onChange={(e) => updateField("visible", e.target.checked)}
+            />
+            <span className="admin-toggle-slider"></span>
+          </span>
+        </label>
 
         <div className="admin-form-actions">
           <button type="button" onClick={() => navigate("/admin/dashboard")} className="admin-btn admin-btn-outline">

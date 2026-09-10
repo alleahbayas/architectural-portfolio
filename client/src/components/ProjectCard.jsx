@@ -1,9 +1,9 @@
 import "./ProjectCard.css";
 import { Link } from "react-router-dom";
 
-function ProjectCard({ slug, number, title, location, image }) {
+function ProjectCard({ slug, number, title, location, image, from }) {
     return (
-      <Link to={`/projects/${slug}`} className="project-card-link">
+      <Link to={`/projects/${slug}`} state={{ from }} className="project-card-link">
           <div className="project-card" style={{ backgroundImage: `url(${image})` }}>
               <div className="project-card-overlay"></div>
               <span className="project-card-num">{number}</span>

@@ -17,6 +17,8 @@ function Login() {
     setError("");
     setLoggingIn(true);
 
+    const startTime = Date.now();
+
     try {
       const res = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -25,18 +27,28 @@ function Login() {
       });
 
       const data = await res.json();
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(2000 - elapsed, 0);
 
       if (!res.ok) {
-        setError(data.error || "Login failed");
-        setLoggingIn(false);
+        setTimeout(() => {
+          setError(data.error || "Login failed");
+          setLoggingIn(false);
+        }, remaining);
         return;
       }
 
-      localStorage.setItem("adminToken", data.token);
-      navigate("/admin/dashboard");
+      setTimeout(() => {
+        localStorage.setItem("adminToken", data.token);
+        navigate("/admin/dashboard");
+      }, remaining);
     } catch (err) {
-      setError("Something went wrong. Try again.");
-      setLoggingIn(false);
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(2000 - elapsed, 0);
+      setTimeout(() => {
+        setError("Something went wrong. Try again.");
+        setLoggingIn(false);
+      }, remaining);
     }
   };
 

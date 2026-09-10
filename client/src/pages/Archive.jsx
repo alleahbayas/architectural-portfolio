@@ -36,7 +36,7 @@ function Archive() {
   }, []);
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/", { state: { scrollTo: "projects" } });
     setTimeout(() => {
       document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
@@ -76,6 +76,7 @@ function Archive() {
               title={project.title}
               location={project.location}
               image={project.image}
+              from="archive"
             />
           ))}
         </div>

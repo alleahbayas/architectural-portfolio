@@ -1,33 +1,30 @@
 import "./Loading.css";
 
 function Loading({ variant = "page", label, titleMain, titleAccent, subLabel }) {
-  if (variant === "admin") {
-    return (
-      <div className="loading-screen loading-admin">
-        <p className="loading-admin-text">Logging in</p>
-        <div className="loading-bar">
-          <div className="loading-bar-fill"></div>
-        </div>
-      </div>
-    );
-  }
+  const isAdmin = variant === "admin";
+
+  const displayLabel = isAdmin ? "ADMIN PANEL" : label;
+  const displayTitleMain = isAdmin ? "Hello," : titleMain;
+  const displayTitleAccent = isAdmin ? "Admin" : titleAccent;
 
   return (
     <div className="loading-screen loading-page">
-      {label && (
+      {displayLabel && (
         <p className="loading-label">
           <span className="loading-label-line"></span>
-          {label}
+          {displayLabel}
           <span className="loading-label-line"></span>
         </p>
       )}
 
       <h1 className="loading-title">
-        {titleMain}{" "}
-        {titleAccent && <span className="loading-title-accent">{titleAccent}</span>}
+        {displayTitleMain}{" "}
+        {displayTitleAccent && (
+          <span className="loading-title-accent">{displayTitleAccent}</span>
+        )}
       </h1>
 
-      {subLabel && <p className="loading-sublabel">{subLabel}</p>}
+      {!isAdmin && subLabel && <p className="loading-sublabel">{subLabel}</p>}
 
       <div className="loading-bar">
         <div className="loading-bar-fill"></div>

@@ -14,7 +14,10 @@ function Projects() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((data) => setProjects(data.slice(0, 4)))
+      .then((data) => {
+        const visibleProjects = data.filter((p) => p.visible !== false);
+        setProjects(visibleProjects.slice(0, 4));
+      })
       .catch((err) => console.error("Failed to load projects:", err));
   }, []);
 
@@ -60,6 +63,7 @@ function Projects() {
                   title={project.title}
                   location={project.location}
                   image={project.image}
+                  from="home"
                 />
               ))}
             </div>
