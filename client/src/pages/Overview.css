@@ -259,7 +259,6 @@
   font-size: 13px;
   letter-spacing: 0.4em;
   text-align: end;
-  margin-right: 10.5em;
   color: #8E8B82;
 }
 
@@ -596,6 +595,7 @@
 
   .brief-question {
     font-size: 18px;
+    padding: 10px;
   }
 
   .brief-desc-block {
@@ -614,6 +614,11 @@
 
   .brief-desc-line {
     display: none;
+  }
+
+  .brief-intro {
+    font-size: 11px;
+    padding: 10px 10px 0;
   }
 
   /* Features */
@@ -636,8 +641,6 @@
 
   .section-label {
     text-align: left;
-    margin-right: 0;
-    order: 1;
   }
 
   .detail-side-images {
@@ -698,5 +701,15 @@
 
   .construction-label {
     text-align: left;
+  }
+
+  .brief-num-row,
+  .approach-num-row {
+    margin: 20px 0;
+    padding: 0 24px;
+  }
+
+  .detail-brand-section {
+    max-height: 100%;
   }
 }
