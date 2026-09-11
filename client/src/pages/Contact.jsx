@@ -1,8 +1,19 @@
 import "./Contact.css";
+import { useState, useEffect } from "react";
 import { Phone, Mail, Download, Send } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
+import API_URL from "../api";
 
 function Contact() {
+  const [settings, setSettings] = useState({ resumeUrl: "", linkedinUrl: "" });
+
+  useEffect(() => {
+    fetch(`${API_URL}/settings`)
+      .then((res) => res.json())
+      .then((data) => setSettings(data))
+      .catch((err) => console.error("Failed to load settings:", err));
+  }, []);
+
   return (
     <section id="contact">
       <div className="contact-columns">
@@ -32,14 +43,34 @@ function Contact() {
           </div>
 
           <div className="contact-buttons">
-            <button className="btn-linkedin">
-              <FaLinkedin size={16} />
-              LinkedIn
-            </button>
-            <button className="btn-cv">
-              <Download size={16} />
-              Download CV
-            </button>
+            {settings.linkedinUrl ? (
+              <a
+                href={settings.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-linkedin"
+              >
+                <FaLinkedin size={16} />
+                LinkedIn
+              </a>
+            ) : (
+              <button className="btn-linkedin" disabled>
+                <FaLinkedin size={16} />
+                LinkedIn
+              </button>
+            )}
+
+            {settings.resumeUrl ? (
+              <a href={`${API_URL}/download-resume`} className="btn-cv">
+                <Download size={16} />
+                Download CV
+              </a>
+            ) : (
+              <button className="btn-cv" disabled>
+                <Download size={16} />
+                Download CV
+              </button>
+            )}
           </div>
         </div>
 

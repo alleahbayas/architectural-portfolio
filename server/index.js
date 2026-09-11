@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 import Project from "./models/Projects.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import upload from "./cloudinary.js";
+import upload, { uploadResume } from "./cloudinary.js";
+import Settings from "./models/Settings.js";
 
 dotenv.config();
 
@@ -87,17 +88,9 @@ app.post("/api/projects", requireAuth, async (req, res) => {
 // UPDATE a project (protected)
 app.put("/api/projects/:id", requireAuth, async (req, res) => {
   try {
-    console.log("=== Incoming PUT request ===");
-    console.log("req.body.sections:", JSON.stringify(req.body.sections, null, 2));
-
     const updated = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
-
-    console.log("=== Saved document ===");
-    console.log("updated.sections:", JSON.stringify(updated.sections, null, 2));
-
     res.json(updated);
   } catch (err) {
-    console.error("Update error:", err);
     res.status(400).json({ error: err.message });
   }
 });
@@ -115,6 +108,104 @@ app.delete("/api/projects/:id", requireAuth, async (req, res) => {
 app.post("/api/upload", requireAuth, upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ error: "No file uploaded" });
   res.json({ url: req.file.path });
+});
+
+// GET site settings (public)
+app.get("/api/settings", async (req, res) => {
+  try {
+    let settings = await Settings.findOne();
+    if (!settings) {
+      settings = await Settings.create({});
+    }
+    res.json(settings);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// UPDATE site settings (protected)
+app.put("/api/settings", requireAuth, async (req, res) => {
+  try {
+    let settings = await Settings.findOne();
+    if (!settings) {
+      settings = await Settings.create(req.body);
+    } else {
+      settings = await Settings.findByIdAndUpdate(settings._id, req.body, { new: true });
+    }
+    res.json(settings);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// UPLOAD resume file (protected)
+app.post("/api/upload-resume", requireAuth, uploadResume.single("resume"), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+  res.json({ url: req.file.path, fileName: req.file.originalname });
+});
+
+// DOWNLOAD resume with correct filename (public, proxies Cloudinary file)
+app.get("/api/download-resume", async (req, res) => {
+  try {
+    const settings = await Settings.findOne();
+    if (!settings?.resumeUrl) {
+      return res.status(404).json({ error: "No resume found" });
+    }
+
+    const response = await fetch(settings.resumeUrl);
+    if (!response.ok) {
+      return res.status(502).json({ error: "Failed to fetch resume from storage" });
+    }
+
+    const buffer = await response.arrayBuffer();
+    const fileName = settings.resumeFileName || "resume.pdf";
+
+    res.setHeader("Content-Disposition", `attachment; filename="${fileName}"`);
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.send(Buffer.from(buffer));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// VIEW resume inline in browser (public, no forced download)
+app.get("/api/view-resume", async (req, res) => {
+  try {
+    const settings = await Settings.findOne();
+    if (!settings?.resumeUrl) {
+      return res.status(404).json({ error: "No resume found" });
+    }
+
+    const response = await fetch(settings.resumeUrl);
+    if (!response.ok) {
+      return res.status(502).json({ error: "Failed to fetch resume from storage" });
+    }
+
+    const buffer = await response.arrayBuffer();
+    const fileName = settings.resumeFileName || "resume.pdf";
+
+    res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
+    res.setHeader("Content-Type", "application/pdf");
+    res.send(Buffer.from(buffer));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE resume (protected)
+app.delete("/api/resume", requireAuth, async (req, res) => {
+  try {
+    const settings = await Settings.findOne();
+    if (!settings) return res.status(404).json({ error: "Settings not found" });
+
+    settings.resumeUrl = "";
+    settings.resumeFileName = "";
+    await settings.save();
+
+    res.json(settings);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 const PORT = process.env.PORT || 5000;

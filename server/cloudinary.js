@@ -21,4 +21,20 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage });
 
+// Separate uploader for resumes/CVs (PDF, DOC, DOCX) — needs resource_type "raw"
+const resumeStorage = new CloudinaryStorage({
+  cloudinary: cloudinary.v2,
+  params: async (req, file) => {
+    const originalName = file.originalname.replace(/\.[^/.]+$/, ""); // strip extension
+    return {
+      folder: "portfolio-resume",
+      resource_type: "raw",
+      public_id: originalName,
+      allowed_formats: ["pdf", "doc", "docx"],
+    };
+  },
+});
+
+export const uploadResume = multer({ storage: resumeStorage });
+
 export default upload;

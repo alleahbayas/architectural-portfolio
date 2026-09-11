@@ -42,12 +42,39 @@
 .admin-btn-primary {
   background-color: #343434;
   color: white;
+  width: fit-content;
+}
+
+.admin-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .admin-btn-outline {
   background: none;
   border: 1px solid #343434;
   color: #343434;
+}
+
+.admin-btn-danger {
+  background: none;
+  border: 1px solid #b00020;
+  color: #b00020;
+}
+
+.admin-btn-danger:hover {
+  background-color: #b00020;
+  color: white;
+}
+
+.admin-btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-btn-small {
+  padding: 6px 14px;
+  font-size: 12px;
 }
 
 .admin-project-list {
@@ -121,4 +148,135 @@
   background-color: #b00020;
   color: white;
   border-color: #b00020;
+}
+
+/* --- Site Settings section --- */
+
+.admin-settings-section {
+  margin-top: 0;
+  padding: 32px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-settings-section h2 {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin: 0 0 20px;
+  color: #343434;
+}
+
+.admin-settings-section label {
+  font-family: var(--font-label);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  margin: 16px 0 6px;
+  color: #8E8B82;
+  text-transform: uppercase;
+}
+
+.admin-settings-section h2 + label {
+  margin-top: 0;
+}
+
+.admin-settings-section input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  font-family: var(--font-body);
+}
+
+.admin-resume-preview {
+  padding: 12px 16px;
+  background: var(--cream);
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.admin-resume-preview a {
+  font-size: 14px;
+  color: #343434;
+  font-family: var(--font-body);
+  text-decoration: none;
+}
+
+.admin-resume-preview a:hover {
+  text-decoration: underline;
+}
+
+.admin-resume-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--cream);
+  border-radius: 10px;
+  margin-bottom: 4px;
+}
+
+.admin-resume-filename {
+  font-size: 14px;
+  color: #343434;
+  font-family: var(--font-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-resume-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-resume-empty {
+  font-size: 13px;
+  color: #ADABA5;
+  margin: 0 0 4px;
+}
+
+.admin-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1px dashed #C7C3B9;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: #343434;
+  cursor: pointer;
+  margin-top: 4px;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.admin-upload-btn:hover {
+  border-color: #8E8B82;
+}
+
+.admin-upload-btn input {
+  display: none;
+}
+
+.admin-settings-success {
+  color: #2e7d32;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 24px 0;
+  align-items: start;
 }
