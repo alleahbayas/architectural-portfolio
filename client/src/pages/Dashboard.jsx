@@ -85,6 +85,24 @@ function Dashboard() {
     }
   };
 
+  const handleDeleteResume = async () => {
+    if (!window.confirm("Delete the current resume?")) return;
+
+    setSettingsError("");
+    setSettingsSuccess("");
+
+    const res = await authFetch("/resume", { method: "DELETE" });
+    if (!res) return;
+
+    if (res.ok) {
+      const data = await res.json();
+      setSettings(data);
+      setSettingsSuccess("Resume deleted.");
+    } else {
+      setSettingsError("Failed to delete resume.");
+    }
+  };
+
   const handleSaveSettings = async () => {
     setSavingSettings(true);
     setSettingsError("");
@@ -151,10 +169,20 @@ function Dashboard() {
 
           <label>Resume / CV</label>
           {settings.resumeUrl ? (
-            <div className="admin-resume-preview">
-              <a href={`${API_URL}/download-resume`}>
+            <div className="admin-resume-row">
+              <a href={`${API_URL}/download-resume`} className="admin-resume-filename">
                 {settings.resumeFileName || "View current resume"}
               </a>
+              <div className="admin-resume-actions">
+                <button
+                  type="button"
+                  onClick={handleDeleteResume}
+                  className="admin-icon-btn admin-icon-btn-danger"
+                  aria-label="Delete resume"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
             </div>
           ) : (
             <p className="admin-resume-empty">No resume uploaded yet.</p>
