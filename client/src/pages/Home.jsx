@@ -7,6 +7,7 @@ import Career from "../pages/Career";
 import Contact from "../pages/Contact";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import FadeIn from "../components/FadeIn";
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -39,10 +40,18 @@ function Home() {
   return (
     <div className="hero-frame">
       <Hero />
-      <About />
-      <Projects />
-      <Career />
-      <Contact />
+      <FadeIn>
+        <About />
+      </FadeIn>
+      <FadeIn>
+        <Projects />
+      </FadeIn>
+      <FadeIn>
+        <Career />
+      </FadeIn>
+      <FadeIn>
+        <Contact />
+      </FadeIn>
       <Footer />
     </div>
   );

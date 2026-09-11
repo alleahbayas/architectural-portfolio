@@ -2,6 +2,7 @@ import "./Hero.css";
 import Header from "./Header";
 import Logo from "../assets/logo.png";
 import heroImg from "../assets/hero.png";
+import FadeIn from "../components/FadeIn";
 
 function Hero() {
   const scrollToSection = (id) => {
@@ -17,7 +18,7 @@ function Hero() {
     <section id="hero" className="hero" style={{ backgroundImage: `url(${heroImg})` }}>
       <div className="hero-overlay"></div>
       <Header />
-
+      
       <div className="hero-logo">
         <img src={Logo} alt="logo" className="logo-img" />
       </div>
@@ -27,24 +28,26 @@ function Hero() {
         <span className="cta-circle-arrow">-&gt;</span>
       </button>
 
-      <div className="hero-content">
-        <p className="hero-label">
-          <span className="hero-label-line"></span>
-          ARCHITECTURAL PORTFOLIO
-        </p>
-        <h1 className="hero-title">Designing the</h1>
-        <div className="hero-title-row">
-          <h1 className="hero-title"><em>Future</em></h1>
-          <button onClick={() => scrollToSection("projects")} className="hero-button">
-            <span className="hero-button-text">View Projects</span>
-            <span className="hero-button-arrow">-&gt;</span>
-          </button>
+      <FadeIn>
+        <div className="hero-content">
+          <p className="hero-label">
+            <span className="hero-label-line"></span>
+            ARCHITECTURAL PORTFOLIO
+          </p>
+          <h1 className="hero-title">Designing the</h1>
+          <div className="hero-title-row">
+            <h1 className="hero-title"><em>Future</em></h1>
+            <button onClick={() => scrollToSection("projects")} className="hero-button">
+              <span className="hero-button-text">View Projects</span>
+              <span className="hero-button-arrow">-&gt;</span>
+            </button>
+          </div>
         </div>
-      </div>
-      <p className="hero-blurb">
-        A curated collection of architectural projects exploring space, 
-        material, light, and the relationship between people and their surroundings.
-      </p>
+        <p className="hero-blurb">
+          A curated collection of architectural projects exploring space, 
+          material, light, and the relationship between people and their surroundings.
+        </p>
+      </FadeIn>
     </section>
   );
 }
