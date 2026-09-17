@@ -279,7 +279,7 @@
 @media (max-width: 834px) {
   .hero {
     height: auto;
-    min-height: 50vh;
+    min-height: 60vh;
     margin: 8px;
     border-radius: 20px;
   }
@@ -306,6 +306,10 @@
     max-width: 200px;
     font-size: 15px;
     bottom: 32px;
+  }
+
+  .hero-cta-button {
+    z-index: 1;
   }
 }
 

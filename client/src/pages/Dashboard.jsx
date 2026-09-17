@@ -131,10 +131,10 @@ function Dashboard() {
         <h1>Manage Projects</h1>
         <div className="admin-dashboard-actions">
           <Link to="/admin/projects/new" className="admin-btn admin-btn-primary">
-            <Plus size={16} /> Add Project
+            <Plus size={16} /> <span className="admin-btn-label">Add Project</span>
           </Link>
           <button onClick={handleLogout} className="admin-btn admin-btn-outline">
-            <LogOut size={16} /> Log Out
+            <LogOut size={16} /> <span className="admin-btn-label">Log Out</span>
           </button>
         </div>
       </div>
