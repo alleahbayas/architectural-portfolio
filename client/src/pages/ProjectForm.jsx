@@ -20,10 +20,10 @@ const emptyProject = {
   constructionImages: [],
   constructionNote: "",
   sections: {
-    overview: { num: "01", label: "OVERVIEW" },
-    features: { num: "02", label: "FEATURES" },
-    brandZoning: { num: "03", label: "BRAND ZONING" },
-    construction: { num: "04", label: "CONSTRUCTION" },
+    overview: { num: "", label: "" },
+    features: { num: "", label: "" },
+    brandZoning: { num: "", label: "" },
+    construction: { num: "", label: "" },
   },
   visible: true,
 };
@@ -279,7 +279,13 @@ function ProjectForm() {
 
         <h2>Main Page</h2>
         <label>Slug (URL-friendly, e.g. sm-beauty)</label>
-        <input value={form.slug} onChange={(e) => updateField("slug", e.target.value)} required />
+        <input
+          value={form.slug}
+          onChange={(e) =>
+            updateField("slug", e.target.value.toLowerCase().replace(/\s+/g, "-"))
+          }
+          required
+        />
 
         <label>Title</label>
         <input value={form.title} onChange={(e) => updateField("title", e.target.value)} required />

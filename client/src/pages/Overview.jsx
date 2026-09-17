@@ -91,7 +91,7 @@ function Overview() {
             )}
 
             <h1 className="detail-title">
-              {project.title}<span>-</span>
+              {project.title}
               <br />
               <em>{project.subtitle}</em>
             </h1>
