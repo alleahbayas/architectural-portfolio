@@ -227,8 +227,6 @@ function ProjectForm() {
     }
   };
 
-  // -----------------------------------------------------------------------
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
